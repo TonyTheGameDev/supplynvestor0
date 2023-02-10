@@ -11,9 +11,9 @@
 
 <div class="banner"> 
   <div style="text-align: center;">
-   <p style="color: white; font-size: 50px; ">0 SPL</p>
+   <p style="color: white; font-size: 50px;  " id="spl">0 SPL</p>
 </div></div>
-<p id="email">email</p>
+
 <div style="  width: 100%;
 right:    0;
 bottom:   0;; text-align: center;position: fixed;
@@ -41,7 +41,7 @@ bottom:   0;; text-align: center;position: fixed;
 <script>
 (function() {
   var stripe = Stripe('pk_live_51MZh7yAN8BQAHpUnNMj4Vp5qGwKWB9ebsiJXssRwNijp9YXAEAZAR3PSiQEL33pZqkq3w1u7qCBgr2XRNSYQ95DC00iFI7hIb6');
-
+  var qty = document.getElementById("qty").value;
   var checkoutButton = document.getElementById('checkout-button-price_1MZiIyAN8BQAHpUnNYfO3krw');
   checkoutButton.addEventListener('click', function () {
     /*
@@ -49,7 +49,7 @@ bottom:   0;; text-align: center;position: fixed;
      * them to Checkout.
      */
     stripe.redirectToCheckout({
-      lineItems: [{price: 'price_1MZiIyAN8BQAHpUnNYfO3krw', quantity: document.getElementById("qty").value}],
+      lineItems: [{price: 'price_1MZiIyAN8BQAHpUnNYfO3krw', quantity: qty}],
       mode: 'payment',
       /*
        * Do not rely on the redirect to the successUrl for fulfilling
@@ -79,11 +79,7 @@ bottom:   0;; text-align: center;position: fixed;
 </div>
 
 
- <script>
-    document.getElementById("email").innerHTML = localStorage.getItem("email");
  
-    
-     </script>
 
 <script>
    function wcqib_refresh_quantity_increments() {
@@ -108,6 +104,68 @@ String.prototype.getDecimals || (String.prototype.getDecimals = function() {
         e = a.attr("step");
     b && "" !== b && "NaN" !== b || (b = 0), "" !== c && "NaN" !== c || (c = ""), "" !== d && "NaN" !== d || (d = 0), "any" !== e && "" !== e && void 0 !== e && "NaN" !== parseFloat(e) || (e = 1), jQuery(this).is(".plus") ? c && b >= c ? a.val(c) : a.val((b + parseFloat(e)).toFixed(e.getDecimals())) : d && b <= d ? a.val(d) : b > 0 && a.val((b - parseFloat(e)).toFixed(e.getDecimals())), a.trigger("change")
 });
+</script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
+     import { getDatabase, ref, set, child, update, remove, onValue ,get} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+   import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDCMUgTAgc2pLAphoaDun4MsoWZnYC958s",
+    authDomain: "supllynvest.firebaseapp.com",
+    projectId: "supllynvest",
+    storageBucket: "supllynvest.appspot.com",
+    messagingSenderId: "517382327295",
+    appId: "1:517382327295:web:fd27323350cb0cffe135ca",
+    measurementId: "G-KDK1PFR894"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+
+   var email = localStorage.getItem("email");
+   var password =localStorage.getItem("password");
+  signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+		  // Signed in 
+		  const user = userCredential.user;
+	      localStorage.setItem("email",email);
+		  localStorage.setItem("password",password);
+		 
+    
+      const starCountRef = ref(db, 'users/' + user.uid + '/supply');
+onValue(starCountRef, (snapshot) => {
+  const data = snapshot.val();
+
+  document.getElementById("spl").innerHTML = data + "SPL";
+  updateStarCount(postElement, data);
+});
+    
+      
+	     
+		  // ...
+		})
+		.catch((error) => {
+		  const errorCode = error.code;
+		  const errorMessage = error.message;
+		  document.getElementById('error').innerHTML=errorMessage;
+		});
+
+
+
+
 </script>
 </body>
 </html>
