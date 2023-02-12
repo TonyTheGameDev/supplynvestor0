@@ -14,13 +14,40 @@
    <p style="color: white; font-size: 50px;  " id="spl">0 SPL</p>
 </div></div>
 
-<div style="  width: 100%;
+<div style=" overflow: hidden;">
+<div class="sect" style="  float:left; background-color: rgb(29, 29, 29);">
+ <p style="color:rgba(255, 255, 255, 0.411);margin: 10px;">Before shipment</p>
+ <p style="font-size: 25px;margin:10px; " id="mb">0$</p>
+ <p style="color: rgba(255, 255, 255, 0.411);margin: 10px;"id="splb">0SPL</p>
+ 
+</div>
+<div class="sect"style="  float:right; background-color:rgb(255, 150, 31);">
+  <p style="color: rgba(255, 255, 255, 0.411);margin: 10px;">After shipment</p>
+  <p  style="font-size: 25px;margin: 10px;"id="ma">0$</p>
+  <p style="color: rgba(255, 255, 255, 0.411);margin:10px;"id="spla">0SPL</p>
+ 
+</div>
+</div>
+<div style="margin:auto;width: 90%; background-color: rgb(31, 31, 31) ;margin-bottom: 15px ;padding: 5px; padding-left: 20px; padding-right :20px; color: white; border-radius: 5px;">
+<h1>Phase 1</h1>
+<p id="days_until"> You can buy supplies for n days from now.</p>
+</div>
+<div style="margin:auto;width: 90%; background-color: rgb(31, 31, 31) ;margin-bottom: 15px ;padding: 5px; padding-left: 20px; padding-right: 20px; color: rgba(255, 255, 255, 0.411); border-radius: 5px;">
+  <h1>Phase 2</h1>
+  <p> Buying supplies is no longer available. Now you wait for the supplies to be shipped to the distributors.</p><p>Wait for n days from now.</p>
+  </div>
+  <div style="margin:auto;width: 90%; background-color: rgb(31, 31, 31) ;margin-bottom: 15px ;padding: 5px; padding-left: 20px; padding-right: 20px; color: rgba(255, 255, 255, 0.411); border-radius: 5px;">
+    <h1>Phase 3</h1>
+    <p> Enjoy your profits.</p>
+    </div>
+    <div style="margin-top: 200px; width: 100%; height: 1px;"></div>
+<div style="  width: 100%; 
 right:    0;
 bottom:   0;; text-align: center;position: fixed;
 " >
  <div class="quantity buttons_added">
 	<input type="button" value="-" class="minus"style="color: white; font-size: 20px; background-color: rgb(187, 105, 12);border: none;">
-   <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""style="color: white; font-size:20px;background-color: rgb(255, 150, 31);" id="qty">
+   <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""style="color: white; font-size:20px;background-color: rgb(255, 150, 31);border: none;" id="qty">
    <input type="button" value="+" class="plus" style="color: white; font-size: 20px; background-color: rgb(187, 105, 12); border: none;">
 </div>
 <!-- Load Stripe.js on your website. -->
@@ -153,13 +180,20 @@ String.prototype.getDecimals || (String.prototype.getDecimals = function() {
 		  localStorage.setItem("password",password);
 		 
     
-      const starCountRef = ref(db, 'users/' + user.uid + '/supply');
+      var starCountRef= ref(db, 'users/' + user.uid + '/supply');
 onValue(starCountRef, (snapshot) => {
   const data = snapshot.val();
+  var initial_money = data *3;
+var after_money = initial_money + (30/100 *initial_money);
+document.getElementById("mb").innerHTML = initial_money+ "$";
+document.getElementById("ma").innerHTML = after_money+ "$";
 
   document.getElementById("spl").innerHTML = data + "SPL";
+  document.getElementById("splb").innerHTML = data + "SPL";
+  document.getElementById("spla").innerHTML = data + "SPL";
 
 });
+
     
       
 	     
@@ -170,6 +204,16 @@ onValue(starCountRef, (snapshot) => {
 		  const errorMessage = error.message;
 		  document.getElementById('error').innerHTML=errorMessage;
 		});
+
+
+    var starCountRef= ref(db, 'days');
+onValue(starCountRef, (snapshot) => {
+  const data = snapshot.val();
+
+  document.getElementById("days_until").innerHTML = "You can buy supplies for "+ data + " days from now.";
+
+});
+
 
 
 
