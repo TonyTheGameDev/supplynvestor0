@@ -75,6 +75,7 @@ bottom:   0;; text-align: center;position: fixed;
 </script>
 <script>
 
+var email = localStorage.getItem("email");
 (function() {
   var stripe = Stripe('pk_live_51MZh7yAN8BQAHpUnNMj4Vp5qGwKWB9ebsiJXssRwNijp9YXAEAZAR3PSiQEL33pZqkq3w1u7qCBgr2XRNSYQ95DC00iFI7hIb6');
   var checkoutButton = document.getElementById('checkout-button-price_1MZiIyAN8BQAHpUnNYfO3krw');
