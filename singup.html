@@ -44,7 +44,30 @@
 						<input class="input100" type="text" name="email" id="email">
 						<span class="focus-input100" data-placeholder="Email"></span>
 					</div>
-
+<div id="verified">	
+					<p id="email_sent_notif"></p>
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+					<div class="login100-form-bgbtn"></div>
+						<button type="button" class="login100-form-btn" id="verify_button">
+							Send Email
+						</button>
+					</div>
+				
+					</div>
+				
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+					<div class="login100-form-bgbtn"></div>
+						<button type="button" class="login100-form-btn" id="create_acc">
+							Create Account
+						</button>
+					</div>
+					
+					</div>
+					</div>
+					
+<div id="not_verified">
 					<div class="wrap-input100 validate-input" data-validate="Enter password" >
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
@@ -61,13 +84,17 @@
 						<span class="focus-input100" data-placeholder="Confirm password"></span>
 					</div>
                       <p id="error"></p>
+					
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button type="button" class="login100-form-btn" id="singup">
 								Sign up
 							</button>
+						
+						
 						</div>
+					</div>
 					</div>
 
 					<div class="text-center p-t-115">
@@ -110,7 +137,7 @@
 		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 		import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
 		   import { getDatabase, ref, set, child, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
-		 import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+		 import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword,sendEmailVerification } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
 	  
 		// TODO: Add SDKs for Firebase products that you want to use
 		// https://firebase.google.com/docs/web/setup#available-libraries
@@ -132,10 +159,88 @@
 		const analytics = getAnalytics(app);
 		const auth = getAuth(app);
 		const db = getDatabase(app);
+   
+		const user =null;
+		document.getElementById("verified").style.display= "none";
 
-	  
+		document.getElementById("not_verified").style.visibility = "initial";
+
+
+
+		document.getElementById("verify_button").onclick = function (){
+			var email=document.getElementById("email").value;
+		var password=document.getElementById("pass").value;
+			signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+		  // Signed in 
+		  const user = userCredential.user;
+	   
+	
+	
+		sendEmailVerification(user)
+      .then(() => {
+        // Email verification sent!
+        let msg = 'An email verification link has been sent to ' + user.email;
+        document.getElementById('email_sent_notif').innerHTML=msg;
+
+      }).catch((error) => {
+        // Error sending email verification
+        console.error(error);
+        document.getElementById('email_sent_notif').innerHTML = error.message;
+      });
+
+	}).catch((error) => {
+		  const errorCode = error.code;
+		  const errorMessage = error.message;
+		  document.getElementById('error').innerHTML=errorMessage;
+		});	
+	}
+
+
+
 
 	
+
+	document.getElementById("create_acc").onclick = function (){
+		var email=document.getElementById("email").value;
+		var password=document.getElementById("pass").value;
+		signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+		  // Signed in 
+		  const user = userCredential.user;
+	
+	     
+	
+		if (user.emailVerified) {
+      console.log("Email is verified");
+	  const uid = user.uid;
+	  
+	  set(ref(db, 'users/' + uid), {
+		 supply:0
+		});
+	
+ 
+		setTimeout("location.href = 'login.html';", 1500);
+	
+;
+    } else {
+  
+	  document.getElementById("email_sent_notif").innerHTML="Email is not verified";
+    }	  // ...
+		})
+		.catch((error) => {
+		  const errorCode = error.code;
+		  const errorMessage = error.message;
+		  document.getElementById('error').innerHTML=errorMessage;
+		});
+
+
+}
+
+
+
+
+
 		document.getElementById("singup").onclick = function (){
 			var email=document.getElementById("email").value;
 		var password=document.getElementById("pass").value;
@@ -143,13 +248,14 @@
 	  createUserWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 		  // Signed in 
-		  const user = userCredential.user;
-		  const uid = user.uid;
-		  set(ref(db, 'users/' + uid), {
-		 supply:0
-		});
-		document.getElementById('error').innerHTML="Account created";
-		setTimeout("location.href = 'login.html';", 1500);
+		 
+		  user = userCredential.user;
+		 
+	
+		
+		
+		
+	
 		  // ...
 		})
 		.catch((error) => {
@@ -157,7 +263,11 @@
 		  const errorMessage = error.message;
 		  document.getElementById('error').innerHTML=errorMessage;
 		  // ..
+
 		});
+		document.getElementById('error').innerHTML="Account created";
+		document.getElementById("verified").style.display = "initial";
+		document.getElementById("not_verified").style.display = "none"
 	}else{
 		document.getElementById('error').innerHTML="Password and Confirm Password need to match";
 	}
