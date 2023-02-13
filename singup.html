@@ -206,9 +206,12 @@
 		if(document.getElementById("pass").value==document.getElementById("confirm_pass").value){
 	        var starCountRef= ref(db, 'users/' + used_ref);
 onValue(starCountRef, (snapshot) => {
-    if (snapshot.exists() || used_ref=="") {
+	var starCountRef0= ref(db, 'users/' + user.uid+'/invites');
+onValue(starCountRef0, (snapshot0) => {
+ var invite_count=	snapshot0.val();
+    if ((snapshot.exists() && invite_count > 0) || used_ref=="") {
 
-
+       
         createUserWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 		  // Signed in 
@@ -237,7 +240,7 @@ onValue(starCountRef, (snapshot) => {
 	}else{
 		document.getElementById('error').innerHTML="Invalid Reverral code.";
 	}
-
+});
 });
 	}else{
 		document.getElementById('error').innerHTML="Password and Confirm Password need to match";
