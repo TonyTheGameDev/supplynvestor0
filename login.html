@@ -190,7 +190,7 @@ if(snapshot.val()!="" && invite_count>0){
 
 	
 update( ref(db,'users/' + uid),{
-  supply: 3
+  supply: 1
   
 });
 console.log("yes");
@@ -206,7 +206,7 @@ update(ref(db,'users/' + snapshot.val()),{
   supply:supply
   
 });
-})
+
 
 var starCountRef3= ref(db, 'users/' +snapshot.val()+'/invites');
 onValue(starCountRef3, (snapshot3) => {
@@ -219,8 +219,8 @@ update(ref(db,'users/' + snapshot.val()),{
   invites:invites
   
 });
-})
-
+});
+});
 remove(ref(db,"users/"+user.uid+"/used_referral"))
   .then(function() {
     console.log("Remove succeeded.");
