@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+   <link rel="icon" type="image/png" href="logo1.png">
+   <link rel="stylesheet" href="dashboard.css">
+   <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div style="text-align: center; margin:auto;width: 70%; background-color: rgb(221, 136, 38); ;margin-top: 35px ;padding: 5px; padding-left: 20px; padding-right :20px; color: white; border-radius: 5px;">
+    <h1 style="font-size: 25px;font-family: 'Montserrat', sans-serif;">Earn up to 10 SPL</h1>
+
+    </div>  
+    <div style=" text-align: center; margin:auto;width: 70%; background-color: rgb(31, 31, 31) ;margin-top: 35px ;padding: 5px; padding-left: 20px; padding-right :20px; color: white; border-radius: 5px;">
+        <p>Invites left:</p>
+        <p style="font-size: 150px; margin:20px ;" id="invites">10</p>  
+     
+    
+        </div>
+    <div style="margin:auto;width: 70%; background-color: rgb(31, 31, 31) ;margin-top: 35px ;padding: 5px; padding-left: 20px; padding-right :20px; color: white; border-radius: 5px; padding-bottom: 20px;">
+        <p>Earn 1 spl for every invite (10 max)</p>  
+         <p id="referral">your referral code :</p>
+        <div style="text-align: center;">
+         <input  type="text" value="xxxxxxxxxxxxxxxxxxxxxxxx" id="myInput" style="text-align: center; border: 0px; background-color:  rgb(58, 57, 57) ;font-size: 23px; color: white; border-radius: 5px; width: 80%; margin-bottom: 20px;" readonly>
+         <button onclick="myFunction()" style="width: 15%;border: 0px; background-color:   rgb(58, 57, 57) ;font-size: 20px; color: white; border-radius: 5px;">📋</button></div>
+        </div>
+<!-- The text field -->
+
+
+<!-- The button used to copy the text -->
+
+      
+<script>
+    function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+}
+</script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
+     import { getDatabase, ref, set, child, update, remove, onValue ,get} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+   import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDCMUgTAgc2pLAphoaDun4MsoWZnYC958s",
+    authDomain: "supllynvest.firebaseapp.com",
+    projectId: "supllynvest",
+    storageBucket: "supllynvest.appspot.com",
+    messagingSenderId: "517382327295",
+    appId: "1:517382327295:web:fd27323350cb0cffe135ca",
+    measurementId: "G-KDK1PFR894"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+
+   var email = localStorage.getItem("email");
+   var password =localStorage.getItem("password");
+  signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+		  // Signed in 
+		  const user = userCredential.user;
+          document.getElementById("myInput").value = user.uid;
+	      localStorage.setItem("email",email);
+		  localStorage.setItem("password",password);
+		 
+    
+      var starCountRef= ref(db, 'users/' + user.uid + '/invites');
+onValue(starCountRef, (snapshot) => {
+  
+  document.getElementById("invites").innerHTML = data;
+
+});
+
+    
+      
+	     
+		  // ...
+		})
+		.catch((error) => {
+		  const errorCode = error.code;
+		  const errorMessage = error.message;
+		  document.getElementById('error').innerHTML=errorMessage;
+		});
+
+
+    var starCountRef= ref(db, 'days');
+onValue(starCountRef, (snapshot) => {
+  const data = snapshot.val();
+
+  document.getElementById("days_until").innerHTML = "You can buy supplies for "+ data + " days from now.";
+
+});
+
+
+
+
+
+</script>
+</body>
+</html>

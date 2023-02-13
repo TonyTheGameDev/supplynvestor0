@@ -54,7 +54,7 @@
 					</div>
 					<p id="email_sent_notif"></p>
 					<p id="error"></p>
-					<div id="verify">
+		<div id="verify">
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 					<div class="login100-form-bgbtn"></div>
@@ -64,15 +64,7 @@
 					</div>
 				</div>
 			
-					<div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-					<div class="login100-form-bgbtn"></div>
-						<button type="button" class="login100-form-btn" id="create_acc">
-							Login
-						</button>
-					</div>
-					
-					</div>
+				
 				</div>
 					
 					<div class="container-login100-form-btn">
@@ -144,7 +136,7 @@
 		const analytics = getAnalytics(app);
 		const auth = getAuth(app);
 		const db = getDatabase(app);
-	  
+		var add = true;
 	  document.getElementById("verify").style.display = "none";
 	  
 	  document.getElementById("verify_button").onclick = function (){
@@ -183,18 +175,55 @@
 		signInWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			const user = userCredential.user;
+			var uid = user.uid;
 		  // Signed in 
 		  if (user.emailVerified) {
       console.log("Email is verified");
-	  const uid = user.uid;
+	  var starCountRef= ref(db, 'users/' + user.uid+'/used_referral');
+onValue(starCountRef, (snapshot) => {
+if(snapshot.val()!=""){
+	console.log(snapshot.val());
+
+	
+update( ref(db,'users/' + uid),{
+  supply: 3
+  
+});
+console.log("yes");
+
+var starCountRef2= ref(db, 'users/' +snapshot.val()+'/supply');
+onValue(starCountRef2, (snapshot2) => {
+	
+	var supply=snapshot2.val();
+	if(add==true){
+		add=false;
+	supply= supply+ 3;}
+update(ref(db,'users/' + snapshot.val()),{
+  supply:supply
+  
+});
+})
+
+remove(ref(db,"users/"+user.uid+"/used_referral"))
+  .then(function() {
+    console.log("Remove succeeded.");
+  })
+  .catch(function(error) {
+    console.log("Remove failed: " + error.message);
+  });
+
+}
+
+});
 	  
 	
 
 		
 	      localStorage.setItem("email",email);
 		  localStorage.setItem("password",password);
-		  window.location.replace("dashboard.html");
-	     
+		  document.getElementById("error").innerHTML = "login in ...";
+		  setTimeout("location.href = 'dashboard.html';", 4000);
+		 
 		  // ...
 		  ;
     } else {

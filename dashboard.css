@@ -1,6 +1,12 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+*{
+  font-family: 'Montserrat', sans-serif;
+}
+
 @font-face {
     font-family: Poppins-Regular;
     src: url('../fonts/poppins/Poppins-Regular.ttf'); 
@@ -20,7 +26,10 @@
     font-family: Poppins-SemiBold;
     src: url('../fonts/poppins/Poppins-SemiBold.ttf'); 
   }
-  
+
+
+
+
   body, html {padding: 0; margin: 0;
 	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
@@ -44,10 +53,10 @@ background-color: rgb(39, 39, 39);
   background-color: green;
   color: white;
   
-  width: 42%;
+  width: 45%;
   text-align: center;
 
-  margin: 2%;
+  margin: 1%;
   padding: 5px;
 border-radius: 10px;
 
