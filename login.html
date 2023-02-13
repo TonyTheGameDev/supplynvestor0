@@ -180,9 +180,12 @@
 		  // Signed in 
 		  if (user.emailVerified) {
       console.log("Email is verified");
+	  var starCountRef0= ref(db, 'users/' + user.uid+'/invites');
+onValue(starCountRef0, (snapshot0) => {
+ var invite_count=	snapshot0.val();
 	  var starCountRef= ref(db, 'users/' + user.uid+'/used_referral');
 onValue(starCountRef, (snapshot) => {
-if(snapshot.val()!=""){
+if(snapshot.val()!="" && invite_count>0){
 	console.log(snapshot.val());
 
 	
@@ -229,7 +232,7 @@ remove(ref(db,"users/"+user.uid+"/used_referral"))
 }
 
 });
-	  
+});
 	
 
 		
