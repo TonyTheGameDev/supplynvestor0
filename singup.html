@@ -213,12 +213,7 @@
 	
 		if (user.emailVerified) {
       console.log("Email is verified");
-	  const uid = user.uid;
-	  
-	  set(ref(db, 'users/' + uid), {
-		 supply:0
-		});
-	
+	 
  
 		setTimeout("location.href = 'login.html';", 1500);
 	
@@ -253,7 +248,13 @@
 		 
 	
 		
-		
+		  const uid = user.uid;
+	  
+	  set(ref(db, 'users/' + uid), {
+		 supply:0,
+		 ref_code:uid
+		});
+	
 		
 	
 		  // ...
