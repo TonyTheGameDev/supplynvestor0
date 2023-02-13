@@ -253,8 +253,16 @@
 	  set(ref(db, 'users/' + uid), {
 		 supply:0,
 		 ref_code:uid
-		});
-	
+		})
+		.then(() => {	
+			document.getElementById('error').innerHTML="Account created";
+		document.getElementById("verified").style.display = "initial";
+		document.getElementById("not_verified").style.display = "none"
+  // Data was successfully written to the database
+})
+.catch((error) => {
+  // An error occurred while writing the data
+});
 		
 	
 		  // ...
@@ -266,11 +274,9 @@
 		  // ..
 
 		});
-		document.getElementById('error').innerHTML="Account created";
-		document.getElementById("verified").style.display = "initial";
-		document.getElementById("not_verified").style.display = "none"
+	
 	}else{
-		document.getElementById('error').innerHTML="Password and Confirm Password need to match";
+		document.getElementById('error').innerHTML="Passwords do not match";
 	}
 	  
 		
