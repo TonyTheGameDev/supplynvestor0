@@ -85,7 +85,7 @@ var email = localStorage.getItem("email");
      * them to Checkout.
      */  var qty= quantityInput.value;
     stripe.redirectToCheckout({
-      lineItems: [{price: 'price_1MaqUyAN8BQAHpUnPZQur3Te', quantity: parseInt(qty)}],
+      lineItems: [{price: 'price_1MZiIyAN8BQAHpUnNYfO3krw', quantity: parseInt(qty)}],
       mode: 'payment',
       /*
        * Do not rely on the redirect to the successUrl for fulfilling
