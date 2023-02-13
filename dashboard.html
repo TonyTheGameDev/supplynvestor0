@@ -103,7 +103,7 @@ var email = localStorage.getItem("email");
        */
       successUrl: 'https://supplynvest.netlify.app/dasboard.html',
       cancelUrl: 'https://supplynvest.netlify.app/dasboard.html',
-      
+      customerEmail:email
     })
     .then(function (result) {
       if (result.error) {
