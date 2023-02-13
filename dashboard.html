@@ -84,7 +84,7 @@ bottom:   0;; text-align: center;position: fixed;
 
 var email = localStorage.getItem("email");
 (function() {
-  var stripe = Stripe('pk_live_51MZh7yAN8BQAHpUnNMj4Vp5qGwKWB9ebsiJXssRwNijp9YXAEAZAR3PSiQEL33pZqkq3w1u7qCBgr2XRNSYQ95DC00iFI7hIb6');
+  var stripe = Stripe('pk_test_51MZh7yAN8BQAHpUn3j43Qc426Tt2LE1f0gK1xsJOSRNJiAPXh5BMxZqhbBdTHM8q8GMzeksnV7nk9OoESfHlKVtu00JGgKU0ST');
   var checkoutButton = document.getElementById('checkout-button-price_1MZiIyAN8BQAHpUnNYfO3krw');
   checkoutButton.addEventListener('click', function () {
     /*
@@ -92,7 +92,7 @@ var email = localStorage.getItem("email");
      * them to Checkout.
      */  var qty= quantityInput.value;
     stripe.redirectToCheckout({
-      lineItems: [{price: 'price_1MZiIyAN8BQAHpUnNYfO3krw', quantity: parseInt(qty)}],
+      lineItems: [{price: 'price_1MZkfZAN8BQAHpUn4J4devja', quantity: parseInt(qty)}],
       mode: 'payment',
       /*
        * Do not rely on the redirect to the successUrl for fulfilling

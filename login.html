@@ -137,6 +137,7 @@
 		const auth = getAuth(app);
 		const db = getDatabase(app);
 		var add = true;
+		var add1 = true;
 	  document.getElementById("verify").style.display = "none";
 	  
 	  document.getElementById("verify_button").onclick = function (){
@@ -200,6 +201,19 @@ onValue(starCountRef2, (snapshot2) => {
 	supply= supply+ 1;}
 update(ref(db,'users/' + snapshot.val()),{
   supply:supply
+  
+});
+})
+
+var starCountRef3= ref(db, 'users/' +snapshot.val()+'/invites');
+onValue(starCountRef3, (snapshot3) => {
+	
+	var invites=snapshot3.val();
+	if(add1==true){
+		add1=false;
+	invites= invites- 1;}
+update(ref(db,'users/' + snapshot.val()),{
+  invites:invites
   
 });
 })
