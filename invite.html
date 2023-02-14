@@ -90,7 +90,7 @@
       var starCountRef= ref(db, 'users/' + user.uid + '/invites');
 onValue(starCountRef, (snapshot) => {
   
-  document.getElementById("invites").innerHTML = data;
+  document.getElementById("invites").innerHTML = snapshot.val();
 
 });
 
