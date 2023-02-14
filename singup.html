@@ -204,12 +204,9 @@
 		var password=document.getElementById("pass").value;
 		var used_ref = document.getElementById("ref_code").value;
 		if(document.getElementById("pass").value==document.getElementById("confirm_pass").value){
-	        var starCountRef= ref(db, 'users/' + used_ref);
+	        var starCountRef= ref(db, 'users/' + used_ref+"ref_code");
 onValue(starCountRef, (snapshot) => {
-	var starCountRef0= ref(db, 'users/' + user.uid+'/invites');
-onValue(starCountRef0, (snapshot0) => {
- var invite_count=	snapshot0.val();
-    if ((snapshot.exists() && invite_count > 0) || used_ref=="") {
+    if (snapshot.exists() || used_ref=="") {
 
        
         createUserWithEmailAndPassword(auth, email, password)
@@ -236,12 +233,12 @@ onValue(starCountRef0, (snapshot0) => {
 		});
 		document.getElementById('error').innerHTML="Account created";
 		document.getElementById("verified").style.display = "initial";
-		document.getElementById("not_verified").style.display = "none"
+		document.getElementById("not_verified").style.display = "none"; 
 	}else{
 		document.getElementById('error').innerHTML="Invalid Reverral code.";
 	}
 });
-});
+
 	}else{
 		document.getElementById('error').innerHTML="Password and Confirm Password need to match";
 	}
