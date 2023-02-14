@@ -204,7 +204,7 @@
 		var password=document.getElementById("pass").value;
 		var used_ref = document.getElementById("ref_code").value;
 		if(document.getElementById("pass").value==document.getElementById("confirm_pass").value){
-	        var starCountRef= ref(db, 'users/' + used_ref+"ref_code");
+	        var starCountRef= ref(db, 'users/' + used_ref+"/ref_code");
 onValue(starCountRef, (snapshot) => {
     if (snapshot.exists() || used_ref=="") {
 
