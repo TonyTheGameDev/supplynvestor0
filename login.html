@@ -213,7 +213,7 @@ onValue(starCountRef3, (snapshot3) => {
 	if(add1==true){
 		add1=false;
 	invites= invites- 1;}
-	if(invites <=0 ){
+	if((invites+1) <=0 ){
 		remove(ref(db,"users/"+snapshot.val()+"/ref_code"))
   .then(function() {
     console.log("Remove succeeded.");
