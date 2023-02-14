@@ -23,7 +23,7 @@
          <p id="referral">your referral code :</p>
         <div style="text-align: center;">
          <input  type="text" value="xxxxxxxxxxxxxxxxxxxxxxxx" id="myInput" style="text-align: center; border: 0px; background-color:  rgb(58, 57, 57) ;font-size: 23px; color: white; border-radius: 5px; width: 80%; margin-bottom: 20px;" readonly>
-         <button onclick="myFunction()" style="width: 15%;border: 0px; background-color:   rgb(58, 57, 57) ;font-size: 20px; color: white; border-radius: 5px;">📋</button></div>
+         <button onclick="myFunction()" style="width: 15%;border: 0px; background-color:   rgb(58, 57, 57) ;font-size:20px; color: white; border-radius: 5px; padding: 5px;">📋</button></div>
         </div>
 <!-- The text field -->
 
@@ -91,6 +91,9 @@
 onValue(starCountRef, (snapshot) => {
   
   document.getElementById("invites").innerHTML = snapshot.val();
+  if(snapshot.val()==0){
+    document.getElementById("myInput").value = 'oops... to many invites';
+  }
 
 });
 
