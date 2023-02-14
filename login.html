@@ -183,7 +183,7 @@
 	 
 	  var starCountRef= ref(db, 'users/' + user.uid+'/used_referral');
 onValue(starCountRef, (snapshot) => {
-if(snapshot.val()!=""){
+if(snapshot.exists() || snapshot.val()!=""){
 	console.log(snapshot.val());
 
 	
