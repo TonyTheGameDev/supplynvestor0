@@ -183,7 +183,7 @@
 	 
 	  var starCountRef= ref(db, 'users/' + user.uid+'/used_referral');
 onValue(starCountRef, (snapshot) => {
-if( snapshot.val()!=="" && snapshot.val !==null)
+if(snapshot.exists() && snapshot.val()!=="")
  {
 	console.log(snapshot.val());
 
@@ -227,7 +227,7 @@ remove(ref(db,"users/"+user.uid+"/used_referral"))
     console.log("Remove failed: " + error.message);
   });
 
-}
+}else{}
 
 });
 
