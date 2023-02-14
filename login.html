@@ -183,51 +183,8 @@
 	 
 	  var starCountRef= ref(db, 'users/' + user.uid+'/used_referral');
 onValue(starCountRef, (snapshot) => {
-if(snapshot.exists() && snapshot.val()!=="")
- {
-	console.log(snapshot.val());
+	setTimeout('if(snapshot.exists() && snapshot.val()!=="") {console.log(snapshot.val());update( ref(db,"users/" + uid),{ supply: 1});var starCountRef2= ref(db, "users/" +snapshot.val()+"/supply");onValue(starCountRef2, (snapshot2) => {var supply=snapshot2.val();if(add==true){	add=false;supply= supply+ 1;}update(ref(db,"users/" + snapshot.val()),{supply:supply});var starCountRef3= ref(db, "users/" +snapshot.val()+"/invites");onValue(starCountRef3, (snapshot3) => {var invites=snapshot3.val();if(add1==true){add1=false;invites= invites- 1;}update(ref(db,"users/" + snapshot.val()),{invites:invites});});});remove(ref(db,"users/"+user.uid+"/used_referral")).then(function() {console.log("Remove succeeded.");}).catch(function(error) {console.log("Remove failed: " + error.message);});}else{}', 1000);
 
-	
-update( ref(db,'users/' + uid),{
-  supply: 1
-  
-});
-
-var starCountRef2= ref(db, 'users/' +snapshot.val()+'/supply');
-onValue(starCountRef2, (snapshot2) => {
-	
-	var supply=snapshot2.val();
-	if(add==true){
-		add=false;
-	supply= supply+ 1;}
-update(ref(db,'users/' + snapshot.val()),{
-  supply:supply
-  
-});
-
-
-var starCountRef3= ref(db, 'users/' +snapshot.val()+'/invites');
-onValue(starCountRef3, (snapshot3) => {
-	
-	var invites=snapshot3.val();
-	if(add1==true){
-		add1=false;
-	invites= invites- 1;}
-update(ref(db,'users/' + snapshot.val()),{
-  invites:invites
-  
-});
-});
-});
-remove(ref(db,"users/"+user.uid+"/used_referral"))
-  .then(function() {
-    console.log("Remove succeeded.");
-  })
-  .catch(function(error) {
-    console.log("Remove failed: " + error.message);
-  });
-
-}else{}
 
 });
 
