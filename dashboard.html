@@ -193,7 +193,7 @@ String.prototype.getDecimals || (String.prototype.getDecimals = function() {
 onValue(starCountRef, (snapshot) => {
   const data = snapshot.val();
   var initial_money = data *3;
-var after_money = initial_money + (45/100 *initial_money);
+var after_money = initial_money + (50/100 *initial_money);
 document.getElementById("mb").innerHTML = initial_money+ "$";
 document.getElementById("ma").innerHTML = after_money+ "$";
 
