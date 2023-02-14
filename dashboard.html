@@ -101,8 +101,8 @@ var email = localStorage.getItem("email");
        * Instead use one of the strategies described in
        * https://stripe.com/docs/payments/checkout/fulfill-orders
        */
-      successUrl: 'https://supplynvest.netlify.app/dasboard.html',
-      cancelUrl: 'https://supplynvest.netlify.app/dasboard.html',
+      successUrl:'https://supplynvest.netlify.app/dashboard.html',
+      cancelUrl: 'https://supplynvest.netlify.app/dashboard.html',
       customerEmail:email
     })
     .then(function (result) {
@@ -193,7 +193,7 @@ String.prototype.getDecimals || (String.prototype.getDecimals = function() {
 onValue(starCountRef, (snapshot) => {
   const data = snapshot.val();
   var initial_money = data *3;
-var after_money = initial_money + (30/100 *initial_money);
+var after_money = initial_money + (45/100 *initial_money);
 document.getElementById("mb").innerHTML = initial_money+ "$";
 document.getElementById("ma").innerHTML = after_money+ "$";
 
